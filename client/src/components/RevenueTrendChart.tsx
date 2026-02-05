@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Paper, Typography, Box, Skeleton } from '@mui/material';
 import * as d3 from 'd3';
-import axios from 'axios';
+import { getTrend } from '../services/api';
 
 const RevenueTrendChart = () => {
     const svgRef = useRef<SVGSVGElement>(null);
@@ -9,10 +9,10 @@ const RevenueTrendChart = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/trend')
-            .then(res => {
+        getTrend()
+            .then(data => {
                 // Mock "Last Year" data for the grouped bar visual
-                const enhancedData = res.data.map((d: any) => ({
+                const enhancedData = data.map((d: any) => ({
                     ...d,
                     lastYear: d.revenue * (0.7 + Math.random() * 0.2) // Mock last year as 70-90% of current
                 }));
