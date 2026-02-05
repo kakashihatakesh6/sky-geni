@@ -3,15 +3,7 @@
   <h1>Revenue Intelligence Console</h1>
   <p><strong>A single-page application for CROs to visualize revenue performance and identifying risks.</strong></p>
 
-  <p>
-    <a href="https://sky-geni-jade.vercel.app/" target="_blank">
-      <img src="https://img.shields.io/badge/Live_Demo-Website-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Website" />
-    </a>
-    &nbsp;
-    <a href="https://server-sky-geni.vercel.app/" target="_blank">
-      <img src="https://img.shields.io/badge/API_Server-Backend-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Server" />
-    </a>
-  </p>
+ 
   
   <img src="https://img.shields.io/badge/react-19.0.0-blue?style=flat-square&logo=react" alt="React">
   <img src="https://img.shields.io/badge/vite-6.0.0-purple?style=flat-square&logo=vite" alt="Vite">
@@ -26,6 +18,16 @@
   <img width="1918" height="852" alt="sky-geni" src="https://github.com/user-attachments/assets/1d8fc95f-e4bf-4254-81b8-0b4da9410db8" />
   <!-- <img src="https://placehold.co/800x400?text=Revenue+Intelligence+Console+Screenshot&font=montserrat" alt="App Screenshot" width="100%"> -->
 </p>
+
+ <p>
+    <a href="https://sky-geni-jade.vercel.app/" target="_blank">
+      <img src="https://img.shields.io/badge/Live_Demo-Website-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Website" />
+    </a>
+    &nbsp;
+    <a href="https://server-sky-geni.vercel.app/" target="_blank">
+      <img src="https://img.shields.io/badge/API_Server-Backend-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Server" />
+    </a>
+  </p>
 
 ## ✨ Overview
 
