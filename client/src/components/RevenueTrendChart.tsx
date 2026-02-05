@@ -23,93 +23,125 @@ const RevenueTrendChart = () => {
     useEffect(() => {
         if (!data.length || !svgRef.current) return;
 
-        const svg = d3.select(svgRef.current);
-        const parent = svgRef.current.parentElement;
-        const width = parent?.clientWidth || 600;
-        const height = 300;
-        const margin = { top: 30, right: 30, bottom: 40, left: 50 };
+        const drawChart = () => {
+            const svg = d3.select(svgRef.current);
+            const parent = svgRef.current?.parentElement;
+            if (!parent) return;
 
-        svg.attr('width', width).attr('height', height);
-        svg.selectAll('*').remove(); // Clear previous
+            const width = parent.clientWidth || 600;
+            const height = parent.clientHeight || 300;
+            const margin = { top: 20, right: 30, bottom: 40, left: 50 };
 
-        const x = d3.scaleBand()
-            .domain(data.map(d => d.month))
-            .range([margin.left, width - margin.right])
-            .padding(0.4); // Thinner bars
+            svg.attr('width', width).attr('height', height);
+            svg.selectAll('*').remove();
 
-        const y = d3.scaleLinear()
-            .domain([0, d3.max(data, d => Math.max(d.revenue, d.target)) as number * 1.2]) // More headroom
-            .nice()
-            .range([height - margin.bottom, margin.top]);
+            // Gradient definition
+            const defs = svg.append("defs");
+            const gradient = defs.append("linearGradient")
+                .attr("id", "barGradient")
+                .attr("x1", "0%")
+                .attr("y1", "0%")
+                .attr("x2", "0%")
+                .attr("y2", "100%");
+            gradient.append("stop")
+                .attr("offset", "0%")
+                .attr("stop-color", "#3b82f6"); // Blue 500
+            gradient.append("stop")
+                .attr("offset", "100%")
+                .attr("stop-color", "#1d4ed8"); // Blue 700
 
-        // Grid lines
-        svg.append('g')
-            .call(d3.axisLeft(y)
-                .tickSize(-(width - margin.left - margin.right))
-                .ticks(5)
-                .tickFormat(() => '') // No labels on grid lines
-            )
-            .call(g => g.select('.domain').remove())
-            .call(g => g.selectAll('.tick line')
-                .attr('stroke', '#e5e7eb')
-                .attr('stroke-dasharray', '4,4') // Dashed grid
-            )
-            .attr('transform', `translate(${margin.left},0)`);
+            const x = d3.scaleBand()
+                .domain(data.map(d => d.month))
+                .range([margin.left, width - margin.right])
+                .padding(0.3);
 
-        // Bars (Revenue)
-        svg.append('g')
-            .attr('fill', '#2563eb') // Bright Blue
-            .selectAll('rect')
-            .data(data)
-            .join('rect')
-            .attr('x', d => x(d.month)!)
-            .attr('y', d => y(d.revenue))
-            .attr('height', d => y(0) - y(d.revenue))
-            .attr('width', x.bandwidth())
-            .attr('rx', 2);
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data, d => Math.max(d.revenue, d.target)) as number * 1.1])
+                .nice()
+                .range([height - margin.bottom, margin.top]);
 
-        // Line (Target)
-        const line = d3.line<any>()
-            .x(d => x(d.month)! + x.bandwidth() / 2)
-            .y(d => y(d.target))
-            .curve(d3.curveMonotoneX); // Smooth curve
+            // Grid lines
+            svg.append('g')
+                .call(d3.axisLeft(y)
+                    .tickSize(-(width - margin.left - margin.right))
+                    .ticks(5)
+                    .tickFormat(() => '')
+                )
+                .call(g => g.select('.domain').remove())
+                .call(g => g.selectAll('.tick line')
+                    .attr('stroke', '#f3f4f6')
+                    .attr('stroke-dasharray', '0')
+                )
+                .attr('transform', `translate(${margin.left},0)`);
 
-        svg.append('path')
-            .datum(data)
-            .attr('fill', 'none')
-            .attr('stroke', '#f97316') // Orange
-            .attr('stroke-width', 3)
-            .attr('d', line);
+            // Bars (Revenue) with Gradient
+            svg.append('g')
+                .attr('fill', 'url(#barGradient)')
+                .selectAll('rect')
+                .data(data)
+                .join('rect')
+                .attr('x', d => x(d.month)!)
+                .attr('y', d => y(d.revenue))
+                .attr('height', d => y(0) - y(d.revenue))
+                .attr('width', x.bandwidth())
+                .attr('rx', 4);
 
-        // Dots for Line
-        svg.append('g')
-            .selectAll('circle')
-            .data(data)
-            .join('circle')
-            .attr('cx', d => x(d.month)! + x.bandwidth() / 2)
-            .attr('cy', d => y(d.target))
-            .attr('r', 5)
-            .attr('fill', 'white')
-            .attr('stroke', '#f97316')
-            .attr('stroke-width', 2);
+            // Line (Target)
+            const line = d3.line<any>()
+                .x(d => x(d.month)! + x.bandwidth() / 2)
+                .y(d => y(d.target))
+                .curve(d3.curveMonotoneX);
 
-        // Axis Labels
-        svg.append('g')
-            .attr('transform', `translate(0,${height - margin.bottom})`)
-            .call(d3.axisBottom(x).tickSize(0).tickPadding(15))
-            .call(g => g.select('.domain').attr('stroke', '#e5e7eb'))
-            .selectAll('text')
-            .attr('fill', '#6b7280')
-            .attr('font-weight', '500');
+            // Shadow for line
+            svg.append('path')
+                .datum(data)
+                .attr('fill', 'none')
+                .attr('stroke', 'rgba(249, 115, 22, 0.2)')
+                .attr('stroke-width', 8)
+                .attr('d', line);
 
-        svg.append('g')
-            .attr('transform', `translate(${margin.left},0)`)
-            .call(d3.axisLeft(y).ticks(5).tickFormat(d => (d as number / 1000) + 'k'))
-            .call(g => g.select('.domain').remove())
-            .call(g => g.selectAll('.tick line').remove()) // Remove tick lines here, handled by grid
-            .selectAll('text')
-            .attr('fill', '#9ca3af') // Lighter axis text
-            .attr('font-size', '11px');
+            svg.append('path')
+                .datum(data)
+                .attr('fill', 'none')
+                .attr('stroke', '#f97316')
+                .attr('stroke-width', 3)
+                .attr('d', line);
+
+            // Dots
+            svg.append('g')
+                .selectAll('circle')
+                .data(data)
+                .join('circle')
+                .attr('cx', d => x(d.month)! + x.bandwidth() / 2)
+                .attr('cy', d => y(d.target))
+                .attr('r', 6)
+                .attr('fill', 'white')
+                .attr('stroke', '#f97316')
+                .attr('stroke-width', 2);
+
+            // Axis
+            svg.append('g')
+                .attr('transform', `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(x).tickSize(0).tickPadding(12))
+                .call(g => g.select('.domain').remove())
+                .selectAll('text')
+                .attr('fill', '#6b7280')
+                .attr('font-weight', '600')
+                .attr('font-size', '12px');
+
+            svg.append('g')
+                .attr('transform', `translate(${margin.left},0)`)
+                .call(d3.axisLeft(y).ticks(5).tickFormat(d => (d as number / 1000) + 'k'))
+                .call(g => g.select('.domain').remove())
+                .call(g => g.selectAll('.tick line').remove())
+                .selectAll('text')
+                .attr('fill', '#9ca3af')
+                .attr('font-size', '12px');
+        };
+
+        drawChart();
+        window.addEventListener('resize', drawChart);
+        return () => window.removeEventListener('resize', drawChart);
 
     }, [data]);
 
@@ -118,8 +150,8 @@ const RevenueTrendChart = () => {
     return (
         <Paper sx={{ p: 4, height: '100%', borderRadius: 2 }}>
             <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>Revenue Trend (Last 6 Months)</Typography>
-            <div style={{ width: '100%' }}>
-                <svg ref={svgRef}></svg>
+            <div style={{ width: '100%', height: 'calc(100% - 40px)' }}> {/* Subtract title height approx */}
+                <svg ref={svgRef} style={{ display: 'block' }}></svg>
             </div>
         </Paper>
     );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, Typography, Box, Divider, Skeleton } from '@mui/material';
+import { Paper, Typography, Box, Divider, Skeleton, Grid } from '@mui/material';
 import { getDrivers } from '../services/api';
 // Use D3 for Sparklines later, for now just numbers
 
@@ -48,14 +48,14 @@ const DriverRow = ({ label, value, trend, unit = '' }: any) => {
 
     return (
         <Box sx={{ py: 2 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', mb: 1 }}>
-                <Box>
+            <Grid container alignItems="center" spacing={2}>
+                <Grid size={{ xs: 5 }}>
                     <Typography variant="subtitle1" fontWeight={700} color="text.primary" sx={{ mb: 0.5 }}>{label}</Typography>
-                    <Box sx={{ height: 40, width: 140 }}>
+                    <Box sx={{ height: 40, width: '100%' }}>
                         <Sparkline data={mockHistory} color="#3b82f6" isPositive={isPositive} />
                     </Box>
-                </Box>
-                <Box sx={{ textAlign: 'right' }}>
+                </Grid>
+                <Grid size={{ xs: 7 }} sx={{ textAlign: 'right' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 1 }}>
                         <Typography variant="h6" sx={{ fontWeight: 700 }}>
                             {unit === '$' ? '$' : ''}{typeof value === 'number' ? value.toLocaleString() : value}{unit === 'Days' ? '' : unit}
@@ -71,8 +71,8 @@ const DriverRow = ({ label, value, trend, unit = '' }: any) => {
                         </Typography>
                     </Box>
                     {unit === 'Days' && <Typography variant="caption" color="text.secondary">Days</Typography>}
-                </Box>
-            </Box>
+                </Grid>
+            </Grid>
         </Box>
     );
 };

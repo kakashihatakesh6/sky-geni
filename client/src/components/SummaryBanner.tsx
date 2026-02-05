@@ -18,7 +18,8 @@ const SummaryBanner = () => {
             color: 'white',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'center', // Centered
+            gap: 8, // Add gap between sections
             borderRadius: 2,
             boxShadow: 3
         }}>
