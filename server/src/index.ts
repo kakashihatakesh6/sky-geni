@@ -15,6 +15,13 @@ loadData();
 // Routes
 app.use('/api', router);
 
+app.use('/', (req, res) => {
+  res.send("server is running fine")
+});
+app.use('/health', (req, res) => {
+  res.send("server is running fine")
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
