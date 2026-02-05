@@ -2,6 +2,16 @@
   <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" alt="Logo" width="80">
   <h1>Revenue Intelligence Console</h1>
   <p><strong>A single-page application for CROs to visualize revenue performance and identifying risks.</strong></p>
+
+  <p>
+    <a href="https://sky-geni-jade.vercel.app/" target="_blank">
+      <img src="https://img.shields.io/badge/Live_Demo-Website-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Website" />
+    </a>
+    &nbsp;
+    <a href="https://server-sky-geni.vercel.app/" target="_blank">
+      <img src="https://img.shields.io/badge/API_Server-Backend-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Server" />
+    </a>
+  </p>
   
   <img src="https://img.shields.io/badge/react-19.0.0-blue?style=flat-square&logo=react" alt="React">
   <img src="https://img.shields.io/badge/vite-6.0.0-purple?style=flat-square&logo=vite" alt="Vite">
