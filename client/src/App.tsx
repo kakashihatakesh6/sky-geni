@@ -1,5 +1,4 @@
-import React from 'react';
-import { ThemeProvider, CssBaseline, Box, AppBar, Toolbar, Typography, Container, Grid, IconButton } from '@mui/material';
+import { ThemeProvider, CssBaseline, Box, AppBar, Toolbar, Typography, Container, Grid, IconButton, Stack } from '@mui/material';
 import { theme } from './theme';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -55,13 +54,13 @@ function App() {
 
                         {/* 2. Three Cards Row */}
                         <Grid container spacing={3}>
-                            <Grid item xs={12} md={4}>
+                            <Grid size={{ xs: 12, md: 4 }}>
                                 <DriversCard />
                             </Grid>
-                            <Grid item xs={12} md={4}>
+                            <Grid size={{ xs: 12, md: 4 }}>
                                 <RiskFactorsCard />
                             </Grid>
-                            <Grid item xs={12} md={4}>
+                            <Grid size={{ xs: 12, md: 4 }}>
                                 <RecommendationsCard />
                             </Grid>
                         </Grid>
@@ -75,5 +74,5 @@ function App() {
     );
 }
 
-import { Stack } from '@mui/material'; // Forgot to import Stack
+
 export default App;
