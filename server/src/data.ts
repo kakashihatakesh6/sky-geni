@@ -20,7 +20,7 @@ export const loadData = () => {
     // Clear and push to preserve reference
     const load = (arr: any[], file: string) => {
         const filePath = path.join(DATA_DIR, file);
-        console.log(`Loading ${file} from ${filePath}`);
+        // console.log(`Loading ${file} from ${filePath}`);
         if (!fs.existsSync(filePath)) {
             console.error(`File not found: ${filePath}`);
             return;
@@ -28,7 +28,7 @@ export const loadData = () => {
         const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
         arr.length = 0;
         arr.push(...data);
-        console.log(`Loaded ${arr.length} records into ${file.replace('.json', '')}`);
+        // console.log(`Loaded ${arr.length} records into ${file.replace('.json', '')}`);
     };
 
     load(accounts, 'accounts.json');
