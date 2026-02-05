@@ -1,5 +1,6 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" alt="Logo" width="80">
+  <!-- <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" alt="Logo" width="80"> -->
+  <img width="1918" height="852" alt="sky-geni" src="https://github.com/user-attachments/assets/1d8fc95f-e4bf-4254-81b8-0b4da9410db8" />
   <h1>Revenue Intelligence Console</h1>
   <p><strong>A single-page application for CROs to visualize revenue performance and identifying risks.</strong></p>
   
@@ -10,6 +11,7 @@
   <img src="https://img.shields.io/badge/express-4.21.0-gray?style=flat-square&logo=express" alt="Express">
   <img src="https://img.shields.io/badge/mui-6.0.0-blue?style=flat-square&logo=mui" alt="MUI">
 </div>
+
 
 <p align="center">
   <img src="https://placehold.co/800x400?text=Revenue+Intelligence+Console+Screenshot&font=montserrat" alt="App Screenshot" width="100%">
